@@ -13,14 +13,12 @@ interface TeamDetailsModalProps {
 }
 
 const TeamDetailsModal: React.FC<TeamDetailsModalProps> = ({ teamName, pokemons, onClose }) => {
-  // Handle clicking outside the modal content to close it
   const handleOutsideClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     if ((event.target as Element).classList.contains('modal')) {
       onClose();
     }
   };
 
-  // Add event listener to close the modal on pressing the ESC key
   useEffect(() => {
     const handleEsc = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {

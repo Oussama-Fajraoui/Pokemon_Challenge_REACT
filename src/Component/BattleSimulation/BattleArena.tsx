@@ -4,7 +4,7 @@ interface BattleResult {
   round_no: number;
   team1_pokemon: string;
   team2_pokemon: string;
-  team1_pokemon_image: string;  // Assume these fields are now filled
+  team1_pokemon_image: string;  
   team2_pokemon_image: string;
   team1_pokemon_life: number;
   team2_pokemon_life: number;

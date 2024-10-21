@@ -88,11 +88,11 @@ const BattleSimulation: React.FC = () => {
         console.error('Error simulating battle:', error);
         alert('Failed to simulate the battle. Please try again.');
     } else {
-        console.log("Battle data:", data);  // Log the raw battle data
+        console.log("Battle data:", data);  
         const detailedResults = data.map(result => {
             const team1PokemonDetails = pokemon.find(p => p.name === result.team1_pokemon);
             const team2PokemonDetails = pokemon.find(p => p.name === result.team2_pokemon);
-            console.log("Matching Pokemon 1 Details:", team1PokemonDetails); // Check what is being found
+            console.log("Matching Pokemon 1 Details:", team1PokemonDetails); 
             console.log("Matching Pokemon 2 Details:", team2PokemonDetails);
             return {
                 ...result,
