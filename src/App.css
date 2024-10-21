@@ -40,3 +40,271 @@
 .read-the-docs {
   color: #888;
 }
+
+/* Card Styling for Pokémon Cards */
+.pokemon-card {
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  border: none;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(145deg, #f8f8f8, #e0e0e0);
+  position: relative;
+  z-index: 1;
+}
+
+.pokemon-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.pokemon-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  width: 100%;
+  height: 200%;
+  background-color: rgba(255, 255, 255, 0.2);
+  transition: all 0.5s;
+  transform: rotate(45deg);
+  left: -100%;
+  z-index: 0;
+}
+
+.pokemon-card:hover::before {
+  transform: rotate(45deg) translate(20rem, -15rem);
+}
+
+.pokemon-img {
+  height: 280px; 
+  object-fit: cover;
+  transition: transform 0.3s ease;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+.pokemon-card:hover .pokemon-img {
+  transform: scale(1.03);
+}
+
+.card-body {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 15px;
+  text-align: center;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+.card-title {
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.card-text {
+  font-size: 1rem;
+  color: #666;
+}
+
+@media (max-width: 767px) {
+  .pokemon-card {
+    margin: 0 15px;
+  }
+}
+
+.card {
+  transition: box-shadow 0.3s ease-in-out;
+  border: none;
+  border-radius: 10px;
+}
+
+.card:hover {
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.card-body {
+  text-align: center;
+}
+
+.card-title {
+  color: #007bff;
+}
+
+.card-text {
+  font-weight: bold;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-dialog {
+  width: 90%;
+  max-width: 500px;
+}
+
+.modal-content {
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.modal-header, .modal-body {
+  padding: 20px;
+}
+
+.close {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-size: 1.5rem;
+}
+
+
+.pokemon-selector-card {
+  padding: 0;
+  margin: 0.5em;
+  border: 1px solid #ddd; /* Light border for the card */
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.pokemon-selector-card:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.pokemon-selector-card.selected {
+  border-color: #007bff; /* Bootstrap primary blue */
+  background-color: #e7f0ff; /* Light blue background to indicate selection */
+}
+
+.pokemon-selector-card img {
+  height: 300px; /* Adjusted height */
+  width: 100%; /* Full width */
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.pokemon-selector-card:hover img {
+  transform: scale(1.05);
+}
+
+.pokemon-selector-card .card-body {
+  padding: 10px;
+  text-align: center;
+}
+
+.pokemon-selector-card .card-title {
+  font-size: 1rem; /* Smaller font size */
+  color: #333; /* Dark gray color for text */
+}
+
+.pokemon-selector-card .card-text {
+  font-size: 0.85rem;
+  color: #666; /* Light gray color for less emphasis */
+}
+
+.alert {
+  position: fixed;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  width: 80%;
+  text-align: center;
+}
+
+.table {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 1rem;
+  background-color: transparent;
+}
+
+.table th, .table td {
+  padding: 0.75rem;
+  vertical-align: top;
+  border-top: 1px solid #dee2e6;
+}
+
+.table thead th {
+  vertical-align: bottom;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.table tbody + tbody {
+  border-top: 2px solid #dee2e6;
+}
+
+.table .table {
+  background-color: #fff;
+}
+
+.team-area {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.pokemon-icon {
+  width: 60px;
+  height: 60px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 50%; /* Makes the icon circular */
+  margin: 5px;
+  border: 2px solid #fff; /* Optional: adds a white border around the circle */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3); /* Optional: adds slight shadow for depth */
+}
+
+.battle-arena .round-info {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0;
+}
+
+.battle-arena .battlefield {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.battle-arena .pokemon img {
+  height: 100px;
+}
+
+.battle-arena .health-bar {
+  width: 100px;
+  height: 10px;
+  background: red;
+  margin: 5px 0;
+}
+
+.battle-arena .health-bar div {
+  height: 100%;
+  background: green;
+}
+
+.battle-arena .attack-power {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  line-height: 30px; /* Centers the text vertically */
+  border-radius: 50%; /* Makes the element circular */
+  background-color: #f8f8f8; /* Light background for the badge */
+  color: #333; /* Dark text color for visibility */
+  text-align: center;
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+
+

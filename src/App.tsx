@@ -1,30 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import PokemonList from './Component/PokemonList/PokemonList';
 import TeamList from './Component/TeamList/TeamList';
-import supabase from './services/supabaseClient';
-import { Pokemon } from './services/types';
+import PokemonSelector from './Component/CreateTeam/PokemonSelector';
+import BattleSimulation from './Component/BattleSimulation/BattleSimulation';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './App.css'
 
 const App: React.FC = () => {
-  const [pokemons, setPokemons] = useState<Pokemon[]>([]);
-
-  useEffect(() => {
-    const fetchPokemon = async () => {
-      const { data, error } = await supabase.from('pokemon').select('*');
-      if (error) {
-        console.error('Error fetching Pokémon:', error);
-      } else {
-        setPokemons(data || []);
-      }
-    };
-
-    fetchPokemon();
-  }, []);
-
   return (
-    <div className="App">
-      <h1>Pokémon App</h1>
+    <div>
+      <h1>Pokémon Battle Application</h1>
       <PokemonList />
-      {pokemons.length > 0 && <TeamList pokemons={pokemons} />} 
+      <TeamList />
+      <PokemonSelector />
+      <BattleSimulation />
     </div>
   );
 };

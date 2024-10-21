@@ -1,67 +1,77 @@
-import React, { useState } from 'react';
-import supabase from '../../services/supabaseClient';
-import { Pokemon } from '../../services/types';
+import React, { useEffect, useState } from 'react';
+import { supabase } from '../../services/supabaseClient';
+import TeamDetailsModal from '../TeamDetailModal/TeamDetailModal';
 
-interface TeamListProps {
-  pokemons: Pokemon[]; 
+interface Team {
+  id: string;
+  name: string;
+  total_power: number;
 }
 
-const TeamList: React.FC<TeamListProps> = ({ pokemons }) => {
-  const [selectedPokemons, setSelectedPokemons] = useState<number[]>([]); 
-  const [teamName, setTeamName] = useState<string>(''); 
+interface Pokemon {
+  id: string;
+  name: string;
+  image: string;
+}
 
-  // Handle selecting and deselecting Pokémon
-  const handleSelectPokemon = (id: number) => {
-    if (selectedPokemons.includes(id)) {
-      setSelectedPokemons(selectedPokemons.filter(pokemonId => pokemonId !== id));
-    } else if (selectedPokemons.length < 6) {
-      setSelectedPokemons([...selectedPokemons, id]);
-    }
-  };
+const TeamList: React.FC = () => {
+  const [teams, setTeams] = useState<Team[]>([]);
+  const [selectedTeam, setSelectedTeam] = useState<Team | null>(null);
+  const [teamPokemons, setTeamPokemons] = useState<Pokemon[]>([]);
 
-  // Handle saving the team to the database
-  const handleSaveTeam = async () => {
-    if (selectedPokemons.length === 6 && teamName) {
-      const { error } = await supabase.rpc('insert_team', {
-        team_name: teamName,
-        pokemon_ids: selectedPokemons
-      });
+  useEffect(() => {
+    const fetchTeams = async () => {
+      const { data, error } = await supabase
+        .from<Team>('team')
+        .select('*');
       if (error) {
-        console.error('Error saving team:', error);
+        console.error('Error fetching teams:', error);
       } else {
-        alert('Team saved successfully!');
-        setSelectedPokemons([]); 
-        setTeamName(''); 
+        setTeams(data || []);
       }
+    };
+
+    fetchTeams();
+  }, []);
+
+  const handleTeamClick = async (team: Team) => {
+    setSelectedTeam(team);
+    const { data, error } = await supabase
+      .from('team_pokemon')
+      .select(`
+        pokemon: pokemon_id (id, name, image)
+      `)
+      .eq('team_id', team.id);
+
+    if (error) {
+      console.error('Error fetching team pokemons:', error);
     } else {
-      alert('Please select 6 Pokémon and enter a team name.');
+      setTeamPokemons(data.map(item => item.pokemon));
     }
   };
 
   return (
-    <div>
-      <h2>Create Your Team</h2>
-      <input
-        type="text"
-        value={teamName}
-        onChange={(e) => setTeamName(e.target.value)}
-        placeholder="Enter team name"
-      />
-      <ul>
-        {pokemons.map((pokemon) => (
-          <li key={pokemon.id}>
-            <label>
-              <input
-                type="checkbox"
-                checked={selectedPokemons.includes(pokemon.id)}
-                onChange={() => handleSelectPokemon(pokemon.id)}
-              />
-              {pokemon.name} - Power: {pokemon.power} - Life: {pokemon.life}
-            </label>
-          </li>
+    <div className="container mt-5">
+      <h1 className="text-center mb-4">Pokemon Teams</h1>
+      <div className="row">
+        {teams.map((team) => (
+          <div key={team.id} className="col-lg-4 col-md-6 mb-4">
+            <div className="card" onClick={() => handleTeamClick(team)}>
+              <div className="card-body">
+                <h5 className="card-title">{team.name}</h5>
+                <p className="card-text">Total Power: {team.total_power}</p>
+              </div>
+            </div>
+          </div>
         ))}
-      </ul>
-      <button onClick={handleSaveTeam}>Save Team</button>
+      </div>
+      {selectedTeam && teamPokemons.length > 0 && (
+        <TeamDetailsModal
+          teamName={selectedTeam.name}
+          pokemons={teamPokemons}
+          onClose={() => setSelectedTeam(null)}
+        />
+      )}
     </div>
   );
 };
